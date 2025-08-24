@@ -28,24 +28,23 @@ if (navigator.geolocation) {
   );
 } else {
   alert("Geolocation not supported.");
+
+  
 }
 
-// Emergency button click
-document.getElementById("exportBtn").addEventListener("click", () => {
-  if (userLat && userLon) {
-    const locationLink = `https://maps.google.com/?q=${userLat},${userLon}`;
-    const phoneNumber = "918103907611"; // replace with your phone number
-    const msg = `🚨 Emergency! I need help. My location: ${locationLink}`;
+const emergencyBtn = document.getElementById("exportBtn");
+const alertBox = document.getElementById("alertBox");
+const siren = document.getElementById("siren");
 
-    // Example: WhatsApp link
-    window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(msg)}`, "_blank");
+emergencyBtn.addEventListener("click", () => {
+  alertBox.style.display = "block";   
+  siren.play();                       
 
-    // OR Example: SMS link
-    // window.location.href = `sms:${phoneNumber}?body=${encodeURIComponent(msg)}`;
-
-    // OR Example: Email link
-    // window.location.href = `mailto:test@example.com?subject=Emergency&body=${encodeURIComponent(msg)}`;
-  } else {
-    alert("Location not available yet.");
-  }
+  setTimeout(() => {
+    alertBox.style.display = "none";  
+    siren.pause();                    
+    siren.currentTime = 0;           
+  }, 4000); 
 });
+
+

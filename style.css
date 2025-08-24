@@ -1,246 +1,153 @@
+/* Base styles (already cyberpunk themed from your code) */
 body {
-      margin: 0;
-      background: radial-gradient(circle at top left, #0f2027, #203a43, #2c5364);
-      font-family: 'Orbitron', sans-serif;
-      color: #0ff;
-      overflow: hidden;
-    }
+  margin: 0;
+  background: radial-gradient(circle at top left, #0f2027, #203a43, #2c5364);
+  font-family: 'Orbitron', sans-serif;
+  color: #0ff;
+  overflow-x: hidden;
+}
 
-    #logo {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      z-index: 999;
-    }
+/* Emergency Button */
+#exportBtn {
+  margin: 1em auto;
+  padding: 0.9em 2em;
+  font-size: 1.1em;
+  font-weight: bold;
+  background: rgba(255, 0, 0, 0.15);
+  color: #ff4444;
+  border: 2px solid #ff4444;
+  border-radius: 12px;
+  cursor: pointer;
+  text-shadow: 0 0 6px #ff4444, 0 0 12px #ff0000;
+  box-shadow: 0 0 12px rgba(255, 0, 0, 0.4);
+  transition: all 0.2s ease-in-out;
+  width: auto;
+  max-width: 220px;
+}
 
-    #logo img {
-      width: 80px;
-      filter: drop-shadow(0 0 10px #0ff);
-    }
+#exportBtn:hover {
+  background: rgba(255, 0, 0, 0.25);
+  transform: scale(1.08);
+  box-shadow: 0 0 20px rgba(255, 0, 0, 0.7);
+}
 
-    .container {
-      display: flex;
-      flex-wrap: wrap;
-      height: 100vh;
-      backdrop-filter: blur(8px);
-    }
+/* Emergency Popup Box */
+#alertBox {
+  display: none;
+  position: fixed;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(30, 0, 0, 0.95);
+  color: #fff;
+  border: 2px solid #ff0000;
+  border-radius: 14px;
+  padding: 1.5em 2em;
+  text-align: center;
+  z-index: 9999;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.2em;
+  letter-spacing: 1px;
+  box-shadow: 0 0 25px rgba(255, 0, 0, 0.8), inset 0 0 10px rgba(255,0,0,0.4);
+  animation: pulseGlow 1.2s infinite;
+  max-width: 90%;
+  word-wrap: break-word;
+}
 
-    .pane {
-      flex: 1;
-      min-width: 300px;
-      padding: 1.5em;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      border-right: 1px solid rgba(0,255,255,0.1);
-      background: rgba(255, 255, 255, 0.02);
-      box-shadow: inset 0 0 10px rgba(0,255,255,0.05);
-    }
+/* Emergency Popup Heading */
+#alertBox h2 {
+  font-size: 1.6em;
+  margin-bottom: 0.5em;
+  color: #ff4444;
+  text-shadow: 0 0 10px #ff4444, 0 0 20px #ff0000;
+}
 
-    h2, h3 {
-      color: #0ff;
-      text-shadow: 0 0 15px #0ff;
-      border-bottom: 1px solid rgba(0,255,255,0.3);
-      padding-bottom: 0.3em;
-      margin-bottom: 0.8em;
-      letter-spacing: 1px;
-    }
+/* Glow flicker animation */
+@keyframes pulseGlow {
+  0% { box-shadow: 0 0 15px rgba(255, 0, 0, 0.5); }
+  50% { box-shadow: 0 0 30px rgba(255, 0, 0, 1); }
+  100% { box-shadow: 0 0 15px rgba(255, 0, 0, 0.5); }
+}
 
-    button {
-      margin: 1em auto;
-      padding: 0.8em 1.5em;
-      font-size: 1em;
-      background: rgba(0,255,255,0.05);
-      color: #0ff;
-      border: 1.5px solid #0ff;
-      border-radius: 12px;
-      cursor: pointer;
-      text-shadow: 0 0 5px #0ff;
-      backdrop-filter: blur(2px);
-      transition: transform 0.2s ease-in-out;
-    }
+/* Map container */
+#map {
+  width: 100%;
+  height: 380px;
+  border-radius: 12px;
+  margin-top: 0.5em;
+  box-shadow: 0 0 30px rgba(0,255,255,0.3);
+  transition: all 0.3s ease-in-out;
+}
 
-    button:hover {
-      background: rgba(0,255,255,0.2);
-      transform: scale(1.05);
-    }
+/* Layout adjustments */
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  height: 100vh;
+  backdrop-filter: blur(8px);
+}
 
-    #triggerBtn {
-      opacity: 0;
-      pointer-events: auto;
-      width: 100%;
-      height: 3em;
-      margin: 0;
-      border: none;
-      background: transparent;
-      cursor: pointer;
-    }
+.pane {
+  flex: 1;
+  min-width: 300px;
+  padding: 1.5em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  border-right: 1px solid rgba(0,255,255,0.1);
+  background: rgba(255, 255, 255, 0.02);
+  box-shadow: inset 0 0 10px rgba(0,255,255,0.05);
+}
 
-    #alert-box {
-      margin-top: 1em;
-      padding: 0.7em 1.5em;
-      background: rgba(255, 0, 0, 0.9);
-      border-radius: 10px;
-      font-weight: bold;
-      box-shadow: 0 0 10px rgba(255, 0, 0, 0.6);
-      animation: flicker 1.5s infinite;
-      display: none;
-      font-size: 1.1em;
-      letter-spacing: 0.5px;
-      border: 2px dashed #f00;
-      text-align: center;
-    }
+/* RESPONSIVE MEDIA QUERIES */
 
-    @keyframes flicker {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.7; }
-    }
+/* Tablets */
+@media (max-width: 900px) {
+  .container {
+    flex-direction: column;
+    height: auto;
+  }
 
-    #coords, #last-detection, #last-diff {
-      margin-top: 0.5em;
-      font-size: 0.9em;
-      color: #aaa;
-      text-shadow: 0 0 4px #0ff;
-      text-align: center;
-    }
+  .pane {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid rgba(0,255,255,0.1);
+  }
 
-    #map {
-      width: 100%;
-      height: 380px;
-      border-radius: 12px;
-      margin-top: 0.5em;
-      box-shadow: 0 0 30px rgba(0,255,255,0.3);
-      transition: all 0.3s ease-in-out;
-    }
+  #map {
+    height: 300px;
+  }
 
-    #scan-log {
-      width: 90%;
-      margin-top: 1em;
-      padding: 0.5em;
-      background: rgba(0, 0, 0, 0.4);
-      border-radius: 6px;
-      max-height: 120px;
-      overflow-y: auto;
-      font-size: 0.85em;
-      color: #0ff;
-      box-shadow: inset 0 0 8px rgba(0,255,255,0.2);
-      white-space: pre-wrap;
-      text-align: center;
-    }
+  #alertBox {
+    font-size: 1em;
+    padding: 1em;
+  }
+}
 
-    #notifications {
-      width: 95%;
-      max-height: 220px;
-      font-size: 0.95em;
-      background: rgba(0, 0, 0, 0.5);
-      box-shadow: 0 0 12px rgba(0, 255, 255, 0.25);
-      border-left: 4px solid #0ff;
-      padding: 1em;
-      overflow-y: auto;
-      border-radius: 8px;
-    }
+/* Phones */
+@media (max-width: 600px) {
+  h2, h3 {
+    font-size: 1em;
+  }
 
-    .notification {
-      padding: 0.5em;
-      margin-bottom: 0.5em;
-      background: rgba(255, 0, 0, 0.2);
-      border-left: 3px solid red;
-      border-radius: 4px;
-      color: #fff;
-    }
+  #exportBtn {
+    width: 100%;
+    max-width: none;
+    font-size: 1em;
+    padding: 0.8em;
+  }
 
-    .notification.current-detection {
-      background: rgba(255, 0, 0, 0.6);
-      font-weight: bold;
-      font-size: 1em;
-      border-left: 5px solid #fff;
-      text-shadow: 0 0 6px #fff;
-      padding: 0.8em;
-    }
+  #map {
+    height: 250px;
+  }
 
-    .radar-ping {
-      position: absolute;
-      width: 120px;
-      height: 120px;
-      border: 2px solid rgba(0, 255, 255, 0.5);
-      border-radius: 50%;
-      animation: radarPulse 2s infinite;
-      z-index: 999;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-    }
+  #alertBox {
+    font-size: 0.9em;
+    padding: 0.8em 1em;
+  }
 
-    @keyframes radarPulse {
-      0% { transform: translate(-50%, -50%) scale(0); opacity: 1; }
-      100% { transform: translate(-50%, -50%) scale(2); opacity: 0; }
-    }
-
-    .futuristic-marker {
-      position: relative;
-      width: 24px;
-      height: 24px;
-    }
-
-    .futuristic-marker .glow-dot {
-      width: 100%;
-      height: 100%;
-      background-color: #0ff;
-      border-radius: 50%;
-      animation: glow 1.5s infinite ease-in-out;
-    }
-
-    @keyframes glow {
-      0% { box-shadow: 0 0 10px rgba(0, 255, 255, 0.8); }
-      50% { box-shadow: 0 0 20px rgba(0, 255, 255, 1); }
-      100% { box-shadow: 0 0 10px rgba(0, 255, 255, 0.8); }
-    }
-
-    #camera-container {
-      width: 70%;
-      margin-top: 0.5em;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    #camera {
-      width: 100%;
-      max-height: 120px;
-      border-radius: 9px;
-      box-shadow: 0 0 10px #0ff;
-      object-fit: cover;
-    }
-
-    #captureBtn {
-      margin-top: 0.7em;
-      padding: 0.5em 1em;
-      background: rgba(0,255,255,0.1);
-      color: #0ff;
-      border: 1px solid #0ff;
-      border-radius: 10px;
-      cursor: pointer;
-      text-shadow: 0 0 4px #0ff;
-    }
-
-    #captureBtn:hover {
-      background: rgba(0,255,255,0.25);
-    }
-
-    #snapshots {
-      margin-top: 1em;
-      display: flex;
-      gap: 0.5em;
-      flex-wrap: wrap;
-      max-height: 200px;
-      overflow-y: auto;
-    }
-
-    #snapshots img {
-      width: 80px;
-      height: auto;
-      border: 2px solid #0ff;
-      border-radius: 6px;
-      box-shadow: 0 0 5px #0ff;
-    }
+  #alertBox h2 {
+    font-size: 1.2em;
+  }
+}
