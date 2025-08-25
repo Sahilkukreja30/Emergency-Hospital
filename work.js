@@ -32,19 +32,27 @@ if (navigator.geolocation) {
   
 }
 
-const emergencyBtn = document.getElementById("exportBtn");
+
 const alertBox = document.getElementById("alertBox");
-const siren = document.getElementById("siren");
 
-emergencyBtn.addEventListener("click", () => {
-  alertBox.style.display = "block";   
-  siren.play();                       
 
+document.getElementById("exportBtn").addEventListener("click", () => {
+  // Create audio element
+  const audio = new Audio("fx-police(chosic.com).mp3"); // put siren.mp3 in same folder
+  audio.play().catch(err => {
+    console.log("Audio blocked:", err);
+  });
+
+  // Show alert popup
+  alertBox.style.display = "block";
+
+  // Stop after 10 seconds
   setTimeout(() => {
-    alertBox.style.display = "none";  
-    siren.pause();                    
-    siren.currentTime = 0;           
-  }, 4000); 
+    alertBox.style.display = "none";
+    audio.pause();
+    audio.currentTime = 0;
+  }, 4000);
 });
+
 
 
